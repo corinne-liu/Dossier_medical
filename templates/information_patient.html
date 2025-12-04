@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icone.png') }}">
+    <title>Dossier médicale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #3498db;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+
+        nav {
+            text-align: center;
+            background-color: #ecf0f1;
+            padding: 10px 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2980b9;
+            margin: 0 10px;
+        }
+
+        table {
+            width: 95%;
+            border-collapse: collapse;
+            margin: 20px;
+            background-color: #ecf0f1;
+        }
+
+        thead {
+            font-weight: bold;
+        }
+
+        th {
+            background-color: #3498db;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+        }
+
+        td,
+        th {
+            border: 1px solid #bdc3c7;
+            padding: 8px;
+        }
+
+        .container input[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .container form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .section {
+            border-bottom: 1px solid #bdc3c7;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+        }
+
+        .section-header {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 style="text-align:center"> Dossier médicale </h1>
+    </header>
+
+    <nav style="text-align:center; background-color:LightGray">
+        <a href="{{ url_for('session_utilisateur') }}">Liste des patients</a> -
+        <a href="{{ url_for('accueil') }}">Déconnexion</a>
+    </nav>
+
+    <div class="section">
+        <h2 class="section-header">Information du patient</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="5">Information du patient</th>
+                </tr>
+                <tr>
+                    <td>Nom naissance</td>
+                    <td>Nom usage</td>
+                    <td>Prénom</td>
+                    <td>Adresse</td>
+                    <td>Numéro pro du médecin traitant</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in lst_patient %}
+                <tr>
+                    <td>{{patient[1]}}</td>
+                    <td>{{patient[2]}}</td>
+                    <td>{{patient[3]}}</td>
+                    <td>{{patient[4]}}</td>
+                    <td>{{patient[5]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <div class="container">
+            <form action="/session_utilisateur/modifie_patient" method="post">
+                <input type="submit" value="Modifier information patient">
+            </form>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-header">Actes médicaux</h2>
+        {% for acte in lst_acte%}
+        <br>
+        <br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="6">Acte médicale</th>
+                </tr>
+                <tr>
+                    <td>Num de l'acte</td>
+                    <td>Nom de l'acte</td>
+                    <td>Résultat des examens</td>
+                    <td>Date et heure de l'acte</td>
+                    <td>Nom du fichier</td>
+                    <td>Fichier</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{acte[0]}}</td>
+                    <td>{{acte[1]}}</td>
+                    <td>{{acte[2]}}</td>
+                    <td>{{acte[3]}}</td>
+                    <td>
+                        {% for fichier in lst_fichier %}
+                        {% if fichier[0] == acte[0] %}
+                        {{ fichier[1] }}
+                        <br>
+                        <br>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for fichier in lst_fichier %}
+                        {% if fichier[0] == acte[0] %}
+                        <img src="{{ fichier[2] }}" alt="{{ fichier[2] }}">
+                        <br>
+                        <br>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% endfor %}
+        <br>
+        <div class="container">
+            <form action="/session_utilisateur/ajout_acte" method="post">
+                <input type="submit" value="Ajout acte médicaux">
+            </form>
+
+            <form action="/session_utilisateur/ajout_fichier" method="post">
+                <input type="submit" value="Ajout fichier">
+            </form>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-header">Allergie</h2>
+        <br>
+        <br>
+        {% for allergie in lst_allergie%}
+        <p> <b>{{allergie[4]}} (code : {{allergie[0]}})</b></p>
+        <ul>
+            <li><b>Niveau :</b> {{allergie[3]}}</li>
+            <li><b>Date début :</b> {{allergie[1]}}</li>
+            {% if allergie[2] != None %}
+            <li><b>Date fin :</b> {{allergie[2]}}</li>
+            {% endif %}
+        </ul>
+        {% endfor %}
+        <br>
+        <div class="container">
+            <form action="/session_utilisateur/modifie_allergie" method="post">
+                <input type="submit" value="Modifier allergie">
+            </form>
+
+            <form action="/session_utilisateur/ajout_allergie" method="post">
+                <input type="submit" value="Ajout allergie au patient">
+            </form>
+
+            <form action="/session_utilisateur/ajouter_allergie" method="post">
+                <input type="submit" value="Ajout allergie">
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+</body>
+
+</html>

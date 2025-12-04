@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossier médical</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icone.png') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #3498db;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+
+        nav {
+            text-align: center;
+            background-color: LightGray;
+            padding: 10px 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2980b9;
+            margin: 0 10px;
+        }
+
+        .accueil-section {
+            background-color: #ecf0f1;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .features-section {
+            margin: 20px;
+            padding: 20px;
+            background-color: #ecf0f1;
+        }
+
+        .feature {
+            margin-bottom: 20px;
+        }
+
+        .feature h2 {
+            color: #3498db;
+        }
+
+        .feature p {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Dossier médical</h1>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('accueil') }}">Accueil</a> -
+        <a href="{{ url_for('connexion') }}">Connexion</a>
+    </nav>
+
+    <br>
+    <br>
+
+    <div class="accueil-section">
+        <h2>
+            Bienvenue sur le site web pour récupérer des dossiers médicaux.<br> Utilisez la barre de navigation pour
+            accéder aux différentes pages du site web.
+        </h2>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="features-section">
+        <div class="feature">
+            <h2>Important : Maintenance du système</h2>
+            <p>Nous effectuerons une maintenance système le 16/01/2024 de 1h à 5h. Pendant cette période, l'accès au
+                site pourrait être limité.</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
